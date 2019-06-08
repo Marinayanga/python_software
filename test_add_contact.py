@@ -13,11 +13,28 @@ class TestAddContact(unittest.TestCase):
 
     def test_add_contact(self):
         wd = self.wd
-
         self.open_home_page(wd)
-        self.login(wd)
+        self.login(wd, username="admin", password="secret")
         self.add_new_contact(wd)
-        self.create_new_contact(wd)
+        self.create_new_contact(wd, firstname="test", middlename="middlename", lastname="aha", nickname="nickname",
+                                title="theme", mobile="89001113322", email="a@a.ru", company="mail", address="address",
+                                home="89001112233", work="323537", fax="1234567890", email2="alla@man,ru",
+                                email3="dados@ef.ru", homepage="fdfdfdfdf", bday="15", bmonth="July", byear="2000",
+                                aday="17", amonth="April", ayear="2050", address2="leningradskoe shosse", phone2="15",
+                                notes="happy birthdae")
+        self.return_to_contact_page(wd)
+        self.logout(wd)
+
+    def test_add_empty_contact(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.add_new_contact(wd)
+        self.create_new_contact(wd, firstname="", middlename="", lastname="", nickname="", title="", mobile="",
+                                email="", company="", address="", home="", work="",
+                                fax="", email2="", email3="", homepage="",
+                                bday="", bmonth="-", byear="", aday="", amonth="-", ayear="",
+                                address2="", phone2="", notes="")
         self.return_to_contact_page(wd)
         self.logout(wd)
 
@@ -27,71 +44,73 @@ class TestAddContact(unittest.TestCase):
     def return_to_contact_page(self, wd):
         wd.find_element_by_link_text("home page").click()
 
-    def create_new_contact(self, wd):
+    def create_new_contact(self, wd, firstname, middlename, lastname, nickname, title, mobile, email, company, address,
+                           home, work, fax, email2, email3, homepage, bday, bmonth, byear, aday, amonth, ayear,
+                           address2, phone2, notes):
         # create new contact
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("test")
+        wd.find_element_by_name("firstname").send_keys(firstname)
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys("testovich")
+        wd.find_element_by_name("middlename").send_keys(middlename)
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys("aha")
+        wd.find_element_by_name("lastname").send_keys(lastname)
         wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys("okiss")
+        wd.find_element_by_name("nickname").send_keys(nickname)
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys("theme")
+        wd.find_element_by_name("title").send_keys(title)
         wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys("mail")
+        wd.find_element_by_name("company").send_keys(company)
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys("lenin")
+        wd.find_element_by_name("address").send_keys(address)
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("89001112233")
+        wd.find_element_by_name("home").send_keys(home)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("89001113322")
+        wd.find_element_by_name("mobile").send_keys(mobile)
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys("323537")
+        wd.find_element_by_name("work").send_keys(work)
         wd.find_element_by_name("fax").click()
         wd.find_element_by_name("fax").clear()
-        wd.find_element_by_name("fax").send_keys("1234567890")
+        wd.find_element_by_name("fax").send_keys(fax)
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("a@a.eu")
+        wd.find_element_by_name("email").send_keys(email)
         wd.find_element_by_name("email2").clear()
-        wd.find_element_by_name("email2").send_keys("alla@man,ru")
+        wd.find_element_by_name("email2").send_keys(email2)
         wd.find_element_by_name("email3").clear()
-        wd.find_element_by_name("email3").send_keys("dados@ef.ru")
+        wd.find_element_by_name("email3").send_keys(email3)
         wd.find_element_by_name("homepage").click()
         wd.find_element_by_name("homepage").clear()
-        wd.find_element_by_name("homepage").send_keys("fdfdfdfdf")
+        wd.find_element_by_name("homepage").send_keys(homepage)
         wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text("15")
+        Select(wd.find_element_by_name("bday")).select_by_visible_text(bday)
         wd.find_element_by_name("bday").click()
         wd.find_element_by_name("bmonth").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text("July")
+        Select(wd.find_element_by_name("bmonth")).select_by_visible_text(bmonth)
         wd.find_element_by_name("bmonth").click()
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys("2000")
+        wd.find_element_by_name("byear").send_keys(byear)
         wd.find_element_by_name("aday").click()
-        Select(wd.find_element_by_name("aday")).select_by_visible_text("17")
+        Select(wd.find_element_by_name("aday")).select_by_visible_text(aday)
         wd.find_element_by_name("aday").click()
         wd.find_element_by_name("amonth").click()
-        Select(wd.find_element_by_name("amonth")).select_by_visible_text("April")
+        Select(wd.find_element_by_name("amonth")).select_by_visible_text(amonth)
         wd.find_element_by_name("amonth").click()
         wd.find_element_by_name("ayear").click()
         wd.find_element_by_name("ayear").clear()
-        wd.find_element_by_name("ayear").send_keys("2050")
+        wd.find_element_by_name("ayear").send_keys(ayear)
         wd.find_element_by_name("address2").click()
         wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys("leningradskoe shosse")
+        wd.find_element_by_name("address2").send_keys(address2)
         wd.find_element_by_name("phone2").clear()
-        wd.find_element_by_name("phone2").send_keys("15")
+        wd.find_element_by_name("phone2").send_keys(phone2)
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys("happy birthdae")
+        wd.find_element_by_name("notes").send_keys(notes)
         # submit group creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
@@ -99,13 +118,12 @@ class TestAddContact(unittest.TestCase):
         # add new contact
         wd.find_element_by_link_text("add new").click()
 
-    def login(self, wd):
+    def login(self, wd, username, password):
         # login
         wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_id("LoginForm").click()
+        wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_home_page(self, wd):
