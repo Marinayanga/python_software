@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from contact import Contact
+from model.contact import Contact
 import pytest
 from fixture.application import Application
 
@@ -12,7 +12,7 @@ def app(request):
 
 
 def test_add_contact(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.add_new_contact()
     app.create_new_contact(Contact(firstname="test", middlename="middlename", lastname="aha", nickname="nickname",
                                     title="theme", mobile="89001113322", email="a@a.ru", company="mail",
@@ -24,11 +24,11 @@ def test_add_contact(app):
                                     phone2="15",
                                     notes="happy birthdae"))
     app.return_to_contact_page()
-    app.logout()
+    app.session.logout()
 
 
 def test_add_empty_contact(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.add_new_contact()
     app.create_new_contact(Contact(firstname="", middlename="", lastname="", nickname="", title="", mobile="",
                                         email="", company="", address="", home="", work="",
@@ -36,5 +36,5 @@ def test_add_empty_contact(app):
                                         bday="", bmonth="-", byear="", aday="", amonth="-", ayear="",
                                         address2="", phone2="", notes=""))
     app.return_to_contact_page()
-    app.logout()
+    app.session.logout()
 
