@@ -2,7 +2,6 @@ from model.contact import Contact
 
 
 def test_modify_first_contact(app):
-    app.session.login(username="admin", password="secret")
     app.contact.modify_contact(Contact(firstname="upd_test", middlename="upd_iddlename", lastname="upd_last name", nickname="upd_nickname",
                                     title="upd_theme", mobile="upd_89001113322", email="upd_a@a.ru", company="upd_mail",
                                     address="upd_address",
@@ -13,4 +12,3 @@ def test_modify_first_contact(app):
                                     phone2="upd_15",
                                     notes="upd_happy birthdae"))
     app.contact.return_to_contact_page()
-    app.session.logout()
