@@ -16,7 +16,6 @@ def test_add_contact(app):
 
 
 def test_add_empty_contact(app):
-    app.contact.add_new_contact()
     app.contact.create_new_contact(Contact(firstname="", middlename="", lastname="", nickname="", title="", mobile="",
                                         email="", company="", address="", home="", work="",
                                         fax="", email2="", email3="", homepage="",
