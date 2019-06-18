@@ -17,6 +17,7 @@ class ContactHelper:
     def create_new_contact(self, contact):
         # create new contact
         wd = self.app.wd
+        self.add_new_contact()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -164,3 +165,7 @@ class ContactHelper:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         # submit group creation
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
