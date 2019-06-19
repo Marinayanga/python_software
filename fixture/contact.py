@@ -24,10 +24,6 @@ class ContactHelper:
         # submit group creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    def open_home_page_contact(self):
-        wd = self.app.wd
-        wd.get("http://localhost/addressbook/")
-
     def delete_first_contact(self):
         wd = self.app.wd
         # выбираем первый контакт
