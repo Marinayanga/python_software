@@ -10,24 +10,31 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
-    def return_to_contact_page(self):
+    def open_home_page(self):
         wd = self.app.wd
         if wd.current_url.endswith("/") and len(wd.find_elements_by_name("MainForm")) > 0:
             return
+        wd.find_element_by_link_text("home").click()
+        
+    def return_to_contact_page(self):
+        wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
 
     def create_new_contact(self, contact):
         # create new contact
         wd = self.app.wd
+        self.open_home_page()
         # нажать на кнопку добавления нового контакта
         self.add_new_contact()
         #заполнить поля формы
         self.fill_contact_form(contact)
         # submit group creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.return_to_contact_page()
 
     def delete_first_contact(self):
         wd = self.app.wd
+        self.open_home_page()
         # выбираем первый контакт
         wd.find_element_by_name("selected[]").click()
         # удаляем первый контакт
