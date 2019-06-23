@@ -1,5 +1,5 @@
 from selenium.webdriver.support.select import Select
-
+from model.contact import Contact
 
 class ContactHelper:
 
@@ -15,7 +15,7 @@ class ContactHelper:
         if wd.current_url.endswith("/") and len(wd.find_elements_by_name("MainForm")) > 0:
             return
         wd.find_element_by_link_text("home").click()
-        
+
     def return_to_contact_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
@@ -94,3 +94,15 @@ class ContactHelper:
     def count(self):
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
+
+    @property
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_home_page()
+        contacts = []
+        for element in wd.find_elements_by_css_selector("tr[name=entry]"):
+            name = element.text
+            surname = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("id")
+            contacts.append(Contact(firstname=name, lastname=surname, id=id))
+        return contacts
