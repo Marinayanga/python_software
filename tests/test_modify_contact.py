@@ -13,5 +13,11 @@ def test_modify_first_contact(app):
                     aday="17", amonth="April", ayear="2050", address2="leningradskoe shosse",
                     phone2="15",
                     notes="happy birthdae"))
-    app.contact.modify_contact(Contact(firstname="upd_test", middlename="upd_iddlename", lastname="upd_last name"))
-    app.contact.return_to_contact_page()
+    old_contact = app.contact.get_contact_list()
+    contact = Contact(firstname="upd_test", middlename="upd_iddlename", lastname="upd_last name")
+    contact.id = old_contact[0].id
+    app.contact.modify_contact(contact)
+    new_contact = app.contact.get_contact_list()
+    assert len(old_contact) == len(new_contact)
+    old_contact[0] = contact
+    assert sorted(old_contact, key=Contact.id_or_max) == sorted(new_contact, key=Contact.id_or_max)
