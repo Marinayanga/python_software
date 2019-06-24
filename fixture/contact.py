@@ -31,6 +31,8 @@ class ContactHelper:
         # submit group creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_contact_page()
+        self.contact_cache = None
+
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -42,6 +44,8 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         wd.find_element_by_css_selector("div.msgbox")
         self.open_home_page()
+        self.contact_cache = None
+
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
@@ -92,20 +96,24 @@ class ContactHelper:
         self.fill_contact_form(new_contact_data)
         # submit group creation
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        contacts = []
-        for element in wd.find_elements_by_css_selector("tr[name=entry]"):
-            cells = element.find_elements_by_tag_name("td")
-            surname = cells[1].text
-            name = cells[2].text
-            id = element.find_element_by_name("selected[]").get_attribute("id")
-            contacts.append(Contact(lastname=surname, firstname=name, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_css_selector("tr[name=entry]"):
+                cells = element.find_elements_by_tag_name("td")
+                surname = cells[1].text
+                name = cells[2].text
+                id = element.find_element_by_name("selected[]").get_attribute("id")
+                self.contact_cache.append(Contact(lastname=surname, firstname=name, id=id))
+        return list(self.contact_cache)
 
