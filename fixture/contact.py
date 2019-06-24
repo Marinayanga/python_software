@@ -33,18 +33,23 @@ class ContactHelper:
         self.return_to_contact_page()
         self.contact_cache = None
 
-
-    def delete_first_contact(self):
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
-        # выбираем первый контакт
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         # удаляем первый контакт
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         wd.find_element_by_css_selector("div.msgbox")
         self.open_home_page()
         self.contact_cache = None
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
 
 
     def fill_contact_form(self, contact):
@@ -88,10 +93,13 @@ class ContactHelper:
             Select(wd.find_element_by_name(field_name)).select_by_visible_text(text)
             wd.find_element_by_name(field_name).click()
 
-    def modify_contact(self, new_contact_data):
+    def modify_contact(self, index, new_contact_data):
+        self.modify_contact_by_index(0)
+
+    def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         # выбираем первый контакт
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         # заполянем поля
         self.fill_contact_form(new_contact_data)
         # submit group creation
