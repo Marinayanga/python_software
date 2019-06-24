@@ -40,6 +40,7 @@ class ContactHelper:
         # удаляем первый контакт
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
+        self.open_home_page()
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
