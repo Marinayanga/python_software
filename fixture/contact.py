@@ -122,9 +122,11 @@ class ContactHelper:
                 surname = cells[1].text
                 name = cells[2].text
                 id = element.find_element_by_name("selected[]").get_attribute("id")
+                address=cells[3].text
+                all_emails= cells[4].text
                 all_phones = cells[5].text
-                self.contact_cache.append(Contact(lastname=surname, firstname=name, id=id, home=all_phones[0],
-                                                  all_phones_from_home_page=all_phones))
+                self.contact_cache.append(Contact(lastname=surname, firstname=name, id=id, all_phones_from_home_page=all_phones,
+                                                  address=address, all_emails=all_emails))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -151,25 +153,26 @@ class ContactHelper:
         mobile = wd.find_element_by_name("mobile").get_attribute("value")
         work = wd.find_element_by_name("work").get_attribute("value")
         phone2 = wd.find_element_by_name("phone2").get_attribute("value")
-        # middlename = wd.find_element_by_name("middlename").get_attribute("value")
-        # nickname = wd.find_element_by_name("nickname").get_attribute("value")
-        # title = wd.find_element_by_name("title").get_attribute("value")
-        # email = wd.find_element_by_name("email").get_attribute("value")
-        # company = wd.find_element_by_name("company").get_attribute("value")
-        # address = wd.find_element_by_name("address").get_attribute("value")
-        # fax = wd.find_element_by_name("fax").get_attribute("value")
-        # email2 = wd.find_element_by_name("email2").get_attribute("value")
-        # email3 = wd.find_element_by_name("email3").get_attribute("value")
-        # homepage = wd.find_element_by_name("homepage").get_attribute("value")
-        # bday = wd.find_element_by_name("bday").get_attribute("value")
-        # bmonth = wd.find_element_by_name("bmonth").get_attribute("value")
-        # byear = wd.find_element_by_name("byear").get_attribute("value")
-        # aday = wd.find_element_by_name("aday").get_attribute("value")
-        # amonth = wd.find_element_by_name("amonth").get_attribute("value")
-        # ayear = wd.find_element_by_name("ayear").get_attribute("value")
-        # address2 = wd.find_element_by_name("address2").get_attribute("value")
-        # notes = wd.find_element_by_name("notes").get_attribute("value")
-        return Contact(firstname=firstname, lastname=lastname, id=id, home=home, work=work, phone2=phone2, mobile=mobile)
+        #middlename = wd.find_element_by_name("middlename").get_attribute("value")
+        #nickname = wd.find_element_by_name("nickname").get_attribute("value")
+        #title = wd.find_element_by_name("title").get_attribute("value")
+        email = wd.find_element_by_name("email").get_attribute("value")
+        #company = wd.find_element_by_name("company").get_attribute("value")
+        address = wd.find_element_by_name("address").get_attribute("value")
+        #fax = wd.find_element_by_name("fax").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        #homepage = wd.find_element_by_name("homepage").get_attribute("value")
+        #bday = wd.find_element_by_name("bday").get_attribute("value")
+        #bmonth = wd.find_element_by_name("bmonth").get_attribute("value")
+        #byear = wd.find_element_by_name("byear").get_attribute("value")
+        #aday = wd.find_element_by_name("aday").get_attribute("value")
+        #amonth = wd.find_element_by_name("amonth").get_attribute("value")
+        #ayear = wd.find_element_by_name("ayear").get_attribute("value")
+        #address2 = wd.find_element_by_name("address2").get_attribute("value")
+        #notes = wd.find_element_by_name("notes").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, id=id, home=home, work=work, phone2=phone2, mobile=mobile, email=email,
+                       email2=email2, email3=email3, address=address)
 
 
     def get_contact_from_view_page(self, index):
