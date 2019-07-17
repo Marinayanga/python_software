@@ -14,7 +14,7 @@ except getopt.GetoptError as err:
     getopt.usage()
     sys.exit(2)
 
-n = 5
+n = 3
 f = "data/contact.json"
 
 for o, a in opts:
@@ -29,7 +29,7 @@ def random_string(prefix,maxlen):
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
-testdata = [Contact(firstname="", middlename="", lastname="", nickname="", title="", mobile="",
+testdata = [Contact(firstname="", lastname="", middlename="",  nickname="", title="", mobile="",
                    email="", company="", address="", home="", work="",fax="", email2="", email3="", homepage="",
                    bday="", bmonth="-", byear="", aday="", amonth="-", ayear="",address2="", phone2="", notes="")] + \
           [Contact(firstname=random_string("name", 5), middlename=random_string("middlename",5), lastname=random_string("last",10),
