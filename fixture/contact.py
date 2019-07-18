@@ -186,4 +186,32 @@ class ContactHelper:
         return Contact(home=home, mobile=mobile, work=work, phone2=phone2)
 
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(id)
+        # удаляем первый контакт
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        wd.find_element_by_css_selector("div.msgbox")
+        self.open_home_page()
+        self.contact_cache = None
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+    def modify_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        # выбираем первый контакт
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        # заполянем поля
+        self.fill_contact_form(new_contact_data)
+        # submit group creation
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.contact_cache = None
+
+
+
 
