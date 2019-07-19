@@ -218,21 +218,33 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.contact_cache = None
 
-    def add_contact_to_group(self, contact, id):
+    def add_contact_to_group(self, contact_id, group_id):
         wd = self.app.wd
         self.open_home_page()
         # нажать на кнопку добавления нового контакта
-        self.add_new_contact()
-        # заполнить поля формы
-        self.fill_contact_form(contact)
-        #ыбрать группу куда добавить контакт
-        wd.find_element_by_name("new_group").click()
-        wd.find_element_by_css_selector("[value='%s']" %id).click()
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_name("to_group").click()
+        Select(wd.find_element_by_css_selector("select[name=\"to_group\"]")).select_by_value('%s' % group_id)
+        wd.find_element_by_xpath("//input[@value = 'Add to']").click()
 
-        # submit group creation
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.return_to_contact_page()
-        self.contact_cache = None
+    def delete_contact_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.group_page_with_contact(group_id)
+        wd.find_element_by_xpath("//input[@value='%s']" % contact_id).click()
+        wd.find_element_by_xpath("//input[@name='remove']").click()
+
+    def group_page_with_contact(self, group_id):
+        wd = self.app.wd
+        wd.find_element_by_name("group").click()
+        Select(wd.find_element_by_css_selector("select[name=\"group\"]")).select_by_value('%s' % group_id)
+
+
+
+
+
+
+
 
 
 
