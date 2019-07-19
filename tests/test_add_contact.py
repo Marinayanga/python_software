@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
 
+
 def test_add_contact(app, db, json_contact, check_ui):
     contact = json_contact
+
     def clean(contact):
         return Contact(id = contact.id,  firstname = contact.firstname.strip())
     old_contacts = db.get_contact_list()

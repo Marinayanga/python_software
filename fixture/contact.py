@@ -143,6 +143,13 @@ class ContactHelper:
         cell = row.find_elements_by_tag_name("td")[6]
         cell.find_element_by_tag_name("a").click()
 
+    def open_contact_to_edit_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        row = wd.find_element_by_xpath("//tr[@name='entry']/td/input[@value='%s']/../.." % id)
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
         self.open_contact_to_edit_by_index(index)
@@ -201,11 +208,10 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
-    def modify_contact_by_id(self, id, new_contact_data):
+    def modify_contact_by_id(self,id, new_contact_data):
         wd = self.app.wd
         # выбираем первый контакт
-        self.select_contact_by_id(id)
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.open_contact_to_edit_by_id(id)
         # заполянем поля
         self.fill_contact_form(new_contact_data)
         # submit group creation

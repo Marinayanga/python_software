@@ -1,7 +1,8 @@
 from model.contact import Contact
 import random
 
-def test_modify_some_contact(app,db, check_ui):
+
+def test_modify_some_contact(app, db, check_ui):
     if len(db.get_contact_list()) == 0:
         app.contact.create_new_contact(
             Contact(firstname="test", middlename="middlename", lastname="aha", nickname="nickname",
@@ -13,16 +14,18 @@ def test_modify_some_contact(app,db, check_ui):
                     aday="17", amonth="April", ayear="2050", address2="leningradskoe shosse",
                     phone2="15",
                     notes="happy birthdae"))
+
     def clean(contact):
-        return Contact(id = contact.id, firstname = contact.firstname.strip())
-    old_contact = db.get_contact_list()
-    contact_index = random.choice(range(len(old_contact)))
-    contact_to_modify = Contact(firstname="kkkk 333",lastname="fffff 111")
-    contact_to_modify.id = old_contact[contact_index].id
-    app.contact.modify_contact_by_id(contact_to_modify.id,contact_to_modify)
-    new_contact = db.get_contact_list()
-    assert len(old_contact) == len(new_contact)
-    old_contact[contact_index].id = contact_to_modify
-    assert sorted(old_contact, key=Contact.id_or_max) == sorted(new_contact, key=Contact.id_or_max)
+        return Contact(id=contact.id, firstname=contact.firstname.strip(),lastname=contact.lastname.strip() )
+
+    old_contacts = db.get_contact_list()
+    contact_index = random.choice(range(len(old_contacts)))
+    id=old_contacts[contact_index].id
+    contact_modify = Contact(firstname="устала", lastname="привет", id = id)
+    app.contact.modify_contact_by_id(id, contact_modify)
+    new_contacts = db.get_contact_list()
+    assert len(old_contacts) == len(new_contacts)
+    old_contacts[contact_index] = contact_modify
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
     if check_ui:
-        assert sorted(map(clean,new_contact), key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
+        assert sorted(map(clean,new_contacts), key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
