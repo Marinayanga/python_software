@@ -1,5 +1,6 @@
 import re
 from random import randrange
+from model.contact import Contact
 
 
 def test_information_on_home_page(app):
