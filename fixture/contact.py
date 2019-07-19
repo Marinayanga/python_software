@@ -218,6 +218,24 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.contact_cache = None
 
+    def add_contact_to_group(self, contact, id):
+        wd = self.app.wd
+        self.open_home_page()
+        # нажать на кнопку добавления нового контакта
+        self.add_new_contact()
+        # заполнить поля формы
+        self.fill_contact_form(contact)
+        #ыбрать группу куда добавить контакт
+        wd.find_element_by_name("new_group").click()
+        wd.find_element_by_css_selector("[value='%s']" %id).click()
+
+        # submit group creation
+        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.return_to_contact_page()
+        self.contact_cache = None
+
+
+
 
 
 
