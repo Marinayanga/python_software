@@ -9,6 +9,6 @@ def test_delete_contact_from_group(app, db, orm):
             Contact(firstname="test", middlename="middlename"))
     if len(db.get_group_list()) == 0:
         app.group.create(Group(name="Было нечего", header="удалять", footer="создали тебя"))
-    group_id = random.choice(db.get_group_list()).id
-    contact_id = random.choice(orm.get_contacts_in_group(Group(id=group_id))).id
-    app.contact.delete_contact_from_group(group_id, contact_id)
+    group_id = random.choice(db.get_groups_with_contacts())
+    #contact_id = random.choice(orm.get_contacts_in_group(Group(id=group_id))).id
+    app.contact.delete_contact_from_group(group_id)

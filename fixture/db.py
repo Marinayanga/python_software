@@ -36,9 +36,6 @@ class DbFixture:
         return group_sel
 
 
-
-
-
     def get_contact_list(self):
         list =[]
         cursor = self.connection.cursor()
@@ -67,3 +64,17 @@ class DbFixture:
         finally:
             cursor.close()
         return contact_sel
+
+
+    def get_groups_with_contacts(self):
+        list=[]
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select group_id from address_in_groups")
+            for row in cursor:
+                (id,) = row
+                list.append(Group(id=str(id)))
+
+        finally:
+            cursor.close()
+        return list
