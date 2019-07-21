@@ -231,7 +231,7 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         self.group_page_with_contact(group_id)
-        wd.find_elements_by_name("selected[]").click()
+        wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@name='remove']").click()
 
     def group_page_with_contact(self, group_id):
