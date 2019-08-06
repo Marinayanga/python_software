@@ -10,7 +10,7 @@ def test_add_group(app, db, json_groups, check_ui):
         return Group(id = group.id, name = group.name.strip())
     with pytest.allure.step("Given a group list"):
         old_groups = db.get_group_list()
-    with pytest.allure.step("When I add a group %s to the list" %group):
+    with pytest.allure.step("When I add a group %s to the list " %group):
         app.group.create(group)
     with pytest.allure.step("Then the new group list is equal to the old list with the added group"):
         new_groups = db.get_group_list()
